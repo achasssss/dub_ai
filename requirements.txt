@@ -1,6 +1,6 @@
-streamlit==<streamlit_version>
+streamlit==1.5.0
 googletrans==4.0.0-rc1
 pydub==0.25.1
 torch==1.10.0
 TTS==0.0.2
-speech_recognition==*
+speech_recognition==3.8.1
