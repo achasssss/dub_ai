@@ -14,6 +14,8 @@ dependencies:
     - streamlit==1.5.0
     - googletrans==4.0.0-rc1
     - pydub==0.25.1
-    - torch==1.9.1
-    - TTS==0.0.2
+    - torch==2.2.0
+    - TTS==0.21.3
     - speech_recognition
+
+
