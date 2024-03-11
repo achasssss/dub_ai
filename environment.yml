@@ -1,4 +1,19 @@
+# channels:
+#   - conda-forge
+# dependencies:
+#   - ffmpeg=4.3.1
+
+name: your_environment_name
 channels:
   - conda-forge
 dependencies:
-  - ffmpeg=4.3.1
+  - python=3.10
+  - pip
+  - ffmpeg    # Install ffmpeg using conda
+  - pip:
+    - streamlit==1.5.0
+    - googletrans==4.0.0-rc1
+    - pydub==0.25.1
+    - torch==1.9.1
+    - TTS==0.0.2
+    - speech_recognition
