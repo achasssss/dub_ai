@@ -49,8 +49,6 @@ def main():
     with right_column:
         st.markdown("### Upload Here")
 
-        st.markdown("- Fixing 'ffmpeg' error and resolving compatibility issues on community cloud. App works normally on local host. ")
-
         uploaded_file = st.file_uploader("Choose a file", type=["mp3", "wav", "mp4", "mov"])
 
         if uploaded_file is not None:
