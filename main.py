@@ -47,7 +47,7 @@ def main():
                 st.audio(file_path, format='audio/wav')
 
     with right_column:
-        st.markdown("### Upload Heeeeeeere")
+        st.markdown("### Upload Here")
 
         st.markdown("- Fixing 'ffmpeg' error and resolving compatibility issues on community cloud. App works normally on local host. ")
 
