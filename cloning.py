@@ -26,7 +26,6 @@
 #     except Exception as e:
 #         st.error(f"Error generating cloned voice: {e}")
         
-
 import os
 import streamlit as st
 import torch
@@ -37,13 +36,12 @@ from config import LANGUAGES, OUTPUTS_DIR
 
 def agree_to_terms_of_service():
     # Send a POST request to agree to the terms of service
-    data = {"agreement": "I agree"}
-    response = requests.post("https://coqui.ai/tos", data=data)
-
-    # Check if the agreement was successful
-    if response.status_code == 200:
-        return True
-    else:
+    data = {"agree": "y"}
+    try:
+        response = requests.post("https://coqui.ai/agree", data=data)
+        return response.status_code == 200
+    except Exception as e:
+        print(f"Error agreeing to terms of service: {e}")
         return False
 
 def generate_cloned_voice(text, target_language, audio_file_path):
@@ -70,3 +68,4 @@ def generate_cloned_voice(text, target_language, audio_file_path):
             st.error(f"Error generating cloned voice: {e}")
     else:
         st.warning("Failed to agree to the terms of service. Cloned voice generation aborted.")
+
