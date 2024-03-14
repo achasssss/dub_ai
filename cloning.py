@@ -41,12 +41,6 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    # Prompt the user to agree to the terms of service
-    agreed = st.checkbox("I have read, understood and agreed to the Terms and Conditions.")
-    if not agreed:
-        st.error("You must agree to the terms of service to use this model.")
-        return
-
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 
     try:
@@ -60,3 +54,20 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
     except Exception as e:
         st.error(f"Error generating cloned voice: {e}")
+
+def main():
+    st.title("Cloned Voice Generator")
+    
+    agreed = st.checkbox("I have read, understood and agreed to the Terms and Conditions.")
+    
+    if agreed:
+        text = st.text_input("Enter the text to be spoken:")
+        target_language = st.selectbox("Select target language:", LANGUAGES.keys())
+        audio_file = st.file_uploader("Upload audio file:", type=["wav"])
+        
+        if text and target_language and audio_file:
+            if st.button("Translate and Generate Cloned Voice"):
+                generate_cloned_voice(text, target_language, audio_file)
+
+if __name__ == "__main__":
+    main()
