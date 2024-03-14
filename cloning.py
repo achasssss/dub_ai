@@ -29,30 +29,17 @@
 
 
 
-
 import os
 import streamlit as st
 import torch
 from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
-import requests
 
 def agree_to_terms_of_service():
-    # Get the terms of service from the URL
-    terms_url = "https://coqui.ai/cpml.txt"
-    try:
-        response = requests.get(terms_url)
-        terms_text = response.text
-    except Exception as e:
-        st.error(f"Error retrieving terms of service: {e}")
-        return False
-    
-    # Display the terms of service to the user
     st.markdown("## Terms of Service")
-    st.text_area(label="", value=terms_text, height=400)
+    st.write("This license allows only non-commercial use of a machine learning model and its outputs.")
     agreement = st.checkbox("I have read, understood, and agreed to the Terms and Conditions.")
-    
     return agreement
 
 def generate_cloned_voice(text, target_language, audio_file_path):
@@ -79,9 +66,3 @@ def generate_cloned_voice(text, target_language, audio_file_path):
             st.error(f"Error generating cloned voice: {e}")
     else:
         st.warning("Failed to agree to the terms of service. Cloned voice generation aborted.")
-
-# Example usage
-text = "This is a sample text."
-target_language = "English"
-audio_file_path = "sample_audio.wav"  # Path to your audio file
-generate_cloned_voice(text, target_language, audio_file_path)
