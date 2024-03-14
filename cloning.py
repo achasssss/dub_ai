@@ -35,15 +35,21 @@ from config import LANGUAGES, OUTPUTS_DIR
 import requests
 
 def agree_to_terms_of_service():
-    # Send a POST request to agree to the terms of service
-    data = {"agreement": "I agree"}
-    response = requests.post("https://coqui.ai/cpml.txt", data=data)
-
-    # Check if the agreement was successful
-    if response.status_code == 200:
-        return True
-    else:
+    # Get the terms of service from the URL
+    terms_url = "https://coqui.ai/cpml.txt"
+    try:
+        response = requests.get(terms_url)
+        terms_text = response.text
+    except Exception as e:
+        st.error(f"Error retrieving terms of service: {e}")
         return False
+    
+    # Display the terms of service to the user
+    st.markdown("## Terms of Service")
+    st.text_area(label="", value=terms_text, height=400)
+    agreement = st.checkbox("I have read, understood, and agreed to the Terms and Conditions.")
+    
+    return agreement
 
 def generate_cloned_voice(text, target_language, audio_file_path):
     st.write("Generating cloned voice...")
@@ -69,3 +75,4 @@ def generate_cloned_voice(text, target_language, audio_file_path):
             st.error(f"Error generating cloned voice: {e}")
     else:
         st.warning("Failed to agree to the terms of service. Cloned voice generation aborted.")
+
