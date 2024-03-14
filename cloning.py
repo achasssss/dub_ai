@@ -29,19 +29,20 @@
 import os
 import streamlit as st
 import torch
-import requests
 from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
+import requests
 
 def agree_to_terms_of_service():
     # Send a POST request to agree to the terms of service
-    data = {"agree": "y"}
-    try:
-        response = requests.post("https://coqui.ai/cpml.txt", data=data)
-        return response.status_code == 200
-    except Exception as e:
-        print(f"Error agreeing to terms of service: {e}")
+    data = {"agreement": "I agree"}
+    response = requests.post("https://coqui.ai/cpml.txt", data=data)
+
+    # Check if the agreement was successful
+    if response.status_code == 200:
+        return True
+    else:
         return False
 
 def generate_cloned_voice(text, target_language, audio_file_path):
