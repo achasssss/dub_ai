@@ -29,11 +29,14 @@
 
 import os
 import streamlit as st
-import subprocess
 import torch
 from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
+
+def agree_to_terms_of_service():
+    # Automatically agree to the terms of service
+    subprocess.run(['echo', 'y', '|', 'python', '-m', 'TTS.api'])
 
 def generate_cloned_voice(text, target_language, audio_file_path):
     st.write("Generating cloned voice...")
@@ -42,8 +45,7 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    # Automatically agree to the terms of service
-    subprocess.run(['python', '-c', 'import TTS.api; TTS.api.prompt_for_tos()', '--agree'])
+    agree_to_terms_of_service()
 
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 
