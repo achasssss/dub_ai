@@ -34,7 +34,7 @@ from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
 
-def generate_cloned_voice(text, target_language, audio_file_path):
+def generate_cloned_voice(translated_text, target_language, audio_file_path):
     st.write("Generating cloned voice...")
 
     output_file = os.path.join(OUTPUTS_DIR, "cloned_voice.wav")
@@ -49,7 +49,7 @@ def generate_cloned_voice(text, target_language, audio_file_path):
         try:
             vocal_audio_path = get_vocal_audio(audio_file_path)
 
-            tts.tts_to_file(text=text, speaker_wav=vocal_audio_path, language=LANGUAGES[target_language],
+            tts.tts_to_file(text=translated_text, speaker_wav=vocal_audio_path, language=LANGUAGES[target_language],
                             file_path=output_file)
 
             st.write("Cloned voice generated successfully!")
@@ -57,9 +57,5 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
         except Exception as e:
             st.error(f"Error generating cloned voice: {e}")
-
-if __name__ == "__main__":
-    text = "Hello, how are you?"
-    target_language = "en"
-    audio_file_path = "path/to/audio/file.wav"
-    generate_cloned_voice(text, target_language, audio_file_path)
+    else:
+        st.warning("You must accept the terms of service to use this model.")
