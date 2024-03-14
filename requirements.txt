@@ -5,4 +5,5 @@ torch==2.2.0
 TTS==0.21.3
 SpeechRecognition
 selenium
+webdriver_manager
 
