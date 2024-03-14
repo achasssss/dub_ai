@@ -30,6 +30,7 @@
 
 import os
 import streamlit as st
+import torch
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from TTS.api import TTS
