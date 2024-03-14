@@ -38,7 +38,7 @@ from config import LANGUAGES, OUTPUTS_DIR
 def agree_to_terms_of_service():
     # Send a POST request to agree to the terms of service
     data = {"agreement": "I agree"}
-    response = requests.post("https://coqui.ai/agree", data=data)
+    response = requests.post("https://coqui.ai/tos", data=data)
 
     # Check if the agreement was successful
     if response.status_code == 200:
