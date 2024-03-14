@@ -26,6 +26,10 @@
 #     except Exception as e:
 #         st.error(f"Error generating cloned voice: {e}")
         
+
+
+
+
 import os
 import streamlit as st
 import torch
@@ -76,3 +80,8 @@ def generate_cloned_voice(text, target_language, audio_file_path):
     else:
         st.warning("Failed to agree to the terms of service. Cloned voice generation aborted.")
 
+# Example usage
+text = "This is a sample text."
+target_language = "English"
+audio_file_path = "sample_audio.wav"  # Path to your audio file
+generate_cloned_voice(text, target_language, audio_file_path)
