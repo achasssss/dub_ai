@@ -43,7 +43,7 @@ def generate_cloned_voice(text, target_language, audio_file_path):
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # Automatically agree to the terms of service
-    subprocess.run(['echo', 'y', '|', 'python', '-m', 'TTS.api'])
+    subprocess.run(['python', '-c', 'import TTS.api; TTS.api.prompt_for_tos()', '--agree'])
 
     tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 
