@@ -29,15 +29,16 @@
 
 import os
 import streamlit as st
-import subprocess
+import sys
 import torch
 from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
 
 def agree_to_terms_of_service():
-    # Automatically agree to the terms of service
-    subprocess.run(['echo', 'y', '|', 'python', '-m', 'TTS.api'])
+    sys.stdin = open(0)
+    input_text = input("I have read, understood and agreed to the Terms and Conditions. [y/n]: ")
+    return input_text.lower() == 'y'
 
 def generate_cloned_voice(text, target_language, audio_file_path):
     st.write("Generating cloned voice...")
@@ -46,18 +47,19 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    agree_to_terms_of_service()
+    if agree_to_terms_of_service():
+        tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
 
-    tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to(device)
+        try:
+            vocal_audio_path = get_vocal_audio(audio_file_path)
 
-    try:
-        vocal_audio_path = get_vocal_audio(audio_file_path)
+            tts.tts_to_file(text=text, speaker_wav=vocal_audio_path, language=LANGUAGES[target_language],
+                            file_path=output_file)
 
-        tts.tts_to_file(text=text, speaker_wav=vocal_audio_path, language=LANGUAGES[target_language],
-                        file_path=output_file)
+            st.write("Cloned voice generated successfully!")
+            st.audio(output_file)
 
-        st.write("Cloned voice generated successfully!")
-        st.audio(output_file)
-
-    except Exception as e:
-        st.error(f"Error generating cloned voice: {e}")
+        except Exception as e:
+            st.error(f"Error generating cloned voice: {e}")
+    else:
+        st.error("You must agree to the terms of service to use this model.")
