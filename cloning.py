@@ -57,5 +57,9 @@ def generate_cloned_voice(text, target_language, audio_file_path):
 
         except Exception as e:
             st.error(f"Error generating cloned voice: {e}")
-    else:
-        st.warning("You must accept the terms of service to use this model.")
+
+if __name__ == "__main__":
+    text = "Hello, how are you?"
+    target_language = "en"
+    audio_file_path = "path/to/audio/file.wav"
+    generate_cloned_voice(text, target_language, audio_file_path)
