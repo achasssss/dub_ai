@@ -29,16 +29,13 @@
 
 import os
 import streamlit as st
-import sys
 import torch
 from TTS.api import TTS
 from upload_process import get_vocal_audio
 from config import LANGUAGES, OUTPUTS_DIR
 
 def agree_to_terms_of_service():
-    sys.stdin = open(0)
-    input_text = input("I have read, understood and agreed to the Terms and Conditions. [y/n]: ")
-    return input_text.lower() == 'y'
+    return True  # Always return True to bypass user input
 
 def generate_cloned_voice(text, target_language, audio_file_path):
     st.write("Generating cloned voice...")
